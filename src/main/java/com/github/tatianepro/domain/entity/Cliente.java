@@ -1,5 +1,7 @@
 package com.github.tatianepro.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -7,11 +9,16 @@ import java.util.Set;
 public class Cliente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(length = 100)
     private String nome;
 
+    @Column(length = 11)
+    private String cpf;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     private Set<Pedido> pedidos;
 
@@ -37,5 +44,13 @@ public class Cliente {
 
     public void setPedidos(Set<Pedido> pedidos) {
         this.pedidos = pedidos;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 }
