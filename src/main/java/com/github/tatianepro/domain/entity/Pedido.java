@@ -3,27 +3,22 @@ package com.github.tatianepro.domain.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 public class Pedido {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
-
     @Column(name = "data_pedido")
     private LocalDate dataPedido;
-
     @Column(precision = 20, scale = 2)
     private BigDecimal total;
-
     @OneToMany(mappedBy = "pedido")
-    private Set<ItemPedido> itens;
+    private List<ItemPedido> itens;
 
     public Integer getId() {
         return id;
@@ -57,11 +52,11 @@ public class Pedido {
         this.total = total;
     }
 
-    public Set<ItemPedido> getItens() {
+    public List<ItemPedido> getItens() {
         return itens;
     }
 
-    public void setItens(Set<ItemPedido> itens) {
+    public void setItens(List<ItemPedido> itens) {
         this.itens = itens;
     }
 }
