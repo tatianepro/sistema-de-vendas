@@ -2,6 +2,7 @@ package com.github.tatianepro.rest.controller;
 
 import com.github.tatianepro.domain.entity.Cliente;
 import com.github.tatianepro.domain.repository.ClienteRepository;
+import com.github.tatianepro.rest.dto.ClienteDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,7 +29,8 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente save(@RequestBody Cliente cliente) {
+    public Cliente save(@RequestBody @Valid ClienteDto dto) {
+        Cliente cliente = dto.toCliente();
         return clienteRepository.save(cliente);
     }
 
@@ -45,7 +48,7 @@ public class ClienteController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable Integer id, @RequestBody Cliente cliente) {
+    public void update(@PathVariable Integer id, @RequestBody @Valid Cliente cliente) {
         clienteRepository
                 .findById(id)
                 .map(clienteExistente -> {
