@@ -13,10 +13,10 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(length = 100)
+    @Column(length = 100, nullable = false)
     @NotEmpty(message = "Campo nome do cliente é obrigatório.")
     private String nome;
-    @Column(length = 11)
+    @Column(length = 11, nullable = false)
     @NotEmpty(message = "Campo CPF do cliente é obrigatório.")
     @CPF(message = "Informe um CPF válido.")
     private String cpf;

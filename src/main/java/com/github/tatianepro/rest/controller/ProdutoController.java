@@ -2,6 +2,7 @@ package com.github.tatianepro.rest.controller;
 
 import com.github.tatianepro.domain.entity.Produto;
 import com.github.tatianepro.domain.repository.ProdutoRepository;
+import com.github.tatianepro.rest.dto.ProdutoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -26,7 +28,7 @@ public class ProdutoController {
     }
 
     @GetMapping
-    public List<Produto> find(Produto produtoFilter) {
+    public List<Produto> find(ProdutoDto produtoFilter) {
         ExampleMatcher matcher = ExampleMatcher
                 .matching()
                 .withIgnoreCase()
@@ -37,7 +39,8 @@ public class ProdutoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Produto save(@RequestBody Produto produto) {
+    public Produto save(@RequestBody @Valid ProdutoDto dto) {
+        Produto produto = dto.toProduto();
         return produtoRepository.save(produto);
     }
 
@@ -54,7 +57,8 @@ public class ProdutoController {
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable Integer id, @RequestBody Produto produto) {
+    public void update(@PathVariable Integer id, @RequestBody @Valid ProdutoDto dto) {
+        Produto produto = dto.toProduto();
         produtoRepository
                 .findById(id)
                 .map(produtoEncontrado -> {
