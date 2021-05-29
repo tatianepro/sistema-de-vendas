@@ -1,5 +1,6 @@
 package com.github.tatianepro.rest.controller;
 
+import com.github.tatianepro.exception.PedidoNaoEncontradoException;
 import com.github.tatianepro.exception.RegraDeNegocioException;
 import com.github.tatianepro.rest.dto.ApiErrors;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,12 @@ public class ApplicationControllerAdvice {
     public ApiErrors regraDeNegocioExceptionHandler(RegraDeNegocioException ex) {
         String menssagemDeErro = ex.getMessage();
         return new ApiErrors(menssagemDeErro);
+    }
+
+    @ExceptionHandler(PedidoNaoEncontradoException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiErrors pedidoNaoEncontradoExceptionHandler(PedidoNaoEncontradoException ex) {
+        return new ApiErrors(ex.getMessage());
     }
 
 }

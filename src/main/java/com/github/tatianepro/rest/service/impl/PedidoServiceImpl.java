@@ -4,10 +4,12 @@ import com.github.tatianepro.domain.entity.Cliente;
 import com.github.tatianepro.domain.entity.ItemPedido;
 import com.github.tatianepro.domain.entity.Pedido;
 import com.github.tatianepro.domain.entity.Produto;
+import com.github.tatianepro.domain.enums.StatusPedido;
 import com.github.tatianepro.domain.repository.ClienteRepository;
 import com.github.tatianepro.domain.repository.ItemPedidoRepository;
 import com.github.tatianepro.domain.repository.PedidoRepository;
 import com.github.tatianepro.domain.repository.ProdutoRepository;
+import com.github.tatianepro.exception.PedidoNaoEncontradoException;
 import com.github.tatianepro.exception.RegraDeNegocioException;
 import com.github.tatianepro.rest.dto.ItemPedidoDto;
 import com.github.tatianepro.rest.dto.PedidoDto;
@@ -52,6 +54,7 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setCliente(clienteExistente);
         pedido.setTotal(pedidoDto.getTotal());
         pedido.setDataPedido(LocalDate.now());
+        pedido.setStatus(StatusPedido.REALIZADO);
 
         List<ItemPedido> itensPedido = converterItensPedido(pedidoDto.getItens(), pedido);
         pedido.setItens(itensPedido);
@@ -65,6 +68,17 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public Optional<Pedido> obterPedidoCompleto(Integer id) {
         return pedidoRepository.findByIdFetchItens(id);
+    }
+
+    @Override
+    @Transactional
+    public void atualizaStatus(Integer id, StatusPedido novoStatus) {
+        pedidoRepository.findById(id)
+                .map(pedido -> {
+                    pedido.setStatus(novoStatus);
+                    return pedidoRepository.save(pedido);
+                })
+                .orElseThrow( () -> new PedidoNaoEncontradoException());
     }
 
     private List<ItemPedido> converterItensPedido(List<ItemPedidoDto> itensPedidoDto, Pedido pedido) {

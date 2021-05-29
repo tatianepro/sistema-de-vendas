@@ -9,6 +9,7 @@ public class InformacoesPedidoDto {
     private String nomeCliente;
     private String data;
     private BigDecimal total;
+    private String status;
     private List<InformacoesItemPedidoDto> items;
 
     private InformacoesPedidoDto(Builder builder) {
@@ -17,6 +18,7 @@ public class InformacoesPedidoDto {
         this.nomeCliente = builder.nomeCliente;
         this.data = builder.data;
         this.total = builder.total;
+        this.status = builder.status;
         this.items = builder.items;
     }
 
@@ -26,6 +28,7 @@ public class InformacoesPedidoDto {
         private String nomeCliente;
         private String data;
         private BigDecimal total;
+        private String status;
         private List<InformacoesItemPedidoDto> items;
 
         public Builder codigo(Integer codigo) {
@@ -50,6 +53,11 @@ public class InformacoesPedidoDto {
 
         public Builder total(BigDecimal total) {
             this.total = total;
+            return this;
+        }
+
+        public Builder status(String status) {
+            this.status = status;
             return this;
         }
 
@@ -82,6 +90,10 @@ public class InformacoesPedidoDto {
 
     public BigDecimal getTotal() {
         return total;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     public List<InformacoesItemPedidoDto> getItems() {

@@ -2,6 +2,8 @@ package com.github.tatianepro.rest.controller;
 
 import com.github.tatianepro.domain.entity.ItemPedido;
 import com.github.tatianepro.domain.entity.Pedido;
+import com.github.tatianepro.domain.enums.StatusPedido;
+import com.github.tatianepro.rest.dto.AtualizacaoStatusPedidoDto;
 import com.github.tatianepro.rest.dto.InformacoesItemPedidoDto;
 import com.github.tatianepro.rest.dto.InformacoesPedidoDto;
 import com.github.tatianepro.rest.dto.PedidoDto;
@@ -49,6 +51,7 @@ public class PedidoController {
                 .nomeCliente(p.getCliente().getNome())
                 .data(p.getDataPedido().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
                 .total(p.getTotal())
+                .status(p.getStatus().name())
                 .items(converter(p.getItens()))
                 .build();
 
@@ -69,6 +72,14 @@ public class PedidoController {
                             .quantidade(itemPedido.getQuantidade())
                             .build();
                 }).collect(Collectors.toList());
+    }
+
+    @PatchMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateStatus(@PathVariable Integer id
+                            , @RequestBody AtualizacaoStatusPedidoDto dto) {
+        String novoStatus = dto.getNovoStatus();
+        pedidoService.atualizaStatus(id, StatusPedido.valueOf(novoStatus));
     }
 
 }
