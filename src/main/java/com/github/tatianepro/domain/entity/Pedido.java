@@ -1,8 +1,10 @@
 package com.github.tatianepro.domain.entity;
 
 import com.github.tatianepro.domain.enums.StatusPedido;
+import com.github.tatianepro.rest.validation.NotEmptyList;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -18,10 +20,12 @@ public class Pedido {
     @Column(name = "data_pedido")
     private LocalDate dataPedido;
     @Column(precision = 20, scale = 2)
+    @NotNull(message = "Campo total do pedido é obrigatório.")
     private BigDecimal total;
     @Enumerated(EnumType.STRING)
     private StatusPedido status;
     @OneToMany(mappedBy = "pedido")
+    @NotEmptyList(message = "Pedido não pode ser realizado sem itens.")
     private List<ItemPedido> itens;
 
     public Integer getId() {

@@ -19,6 +19,9 @@ public class Produto {
     @PositiveOrZero(message = "Campo preço tem valor positivo.")
     private BigDecimal preco;
 
+    public Produto() {
+    }
+
     public Produto(String descricao, BigDecimal preco) {
         this.descricao = descricao;
         this.preco = preco;

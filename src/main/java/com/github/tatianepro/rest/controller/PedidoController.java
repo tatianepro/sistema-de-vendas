@@ -31,7 +31,7 @@ public class PedidoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Integer save(@RequestBody PedidoDto pedidoDto) {
+    public Integer save(@RequestBody @Valid PedidoDto pedidoDto) {
         Pedido pedido = pedidoService.salvar(pedidoDto);
         return pedido.getId();
     }

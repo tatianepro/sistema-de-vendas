@@ -1,5 +1,8 @@
 package com.github.tatianepro.rest.dto;
 
+import com.github.tatianepro.rest.validation.NotEmptyList;
+
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -21,8 +24,11 @@ import java.util.List;
  */
 
 public class PedidoDto {
+    @NotNull(message = "Informe o código do cliente.")
     private Integer cliente;
+    @NotNull(message = "Campo total do pedido é obrigatório.")
     private BigDecimal total;
+    @NotEmptyList(message = "Pedido não pode ser realizado sem itens.")
     private List<ItemPedidoDto> itens;
 
     public Integer getCliente() {
