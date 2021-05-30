@@ -6,10 +6,10 @@ import org.hibernate.validator.constraints.br.CPF;
 import javax.validation.constraints.NotEmpty;
 
 public class ClienteDto {
-    @NotEmpty(message = "Campo nome do cliente é obrigatório.")
+    @NotEmpty(message = "{campo.nome-cliente.obrigatorio}")
     private String nome;
-    @NotEmpty(message = "Campo CPF do cliente é obrigatório.")
-    @CPF(message = "Informe um CPF válido.")
+    @NotEmpty(message = "{campo.cpf.obrigatorio}")
+    @CPF(message = "{campo.cpf.invalido}")
     private String cpf;
 
     public String getNome() {

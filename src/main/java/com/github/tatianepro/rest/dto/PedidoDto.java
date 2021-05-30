@@ -24,11 +24,11 @@ import java.util.List;
  */
 
 public class PedidoDto {
-    @NotNull(message = "Informe o código do cliente.")
+    @NotNull(message = "{campo.codigo.cliente.obrigatorio}")
     private Integer cliente;
-    @NotNull(message = "Campo total do pedido é obrigatório.")
+    @NotNull(message = "{campo.total-pedido.obrigatorio}")
     private BigDecimal total;
-    @NotEmptyList(message = "Pedido não pode ser realizado sem itens.")
+    @NotEmptyList(message = "{campo.itens-pedido.obrigatorio}")
     private List<ItemPedidoDto> itens;
 
     public Integer getCliente() {

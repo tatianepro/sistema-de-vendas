@@ -12,11 +12,11 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(length = 100, nullable = false)
-    @NotEmpty(message = "Campo descrição é obrigatório.")
+    @NotEmpty(message = "{campo.descricao.obrigatorio}")
     private String descricao;
     @Column(name = "preco_unitario", precision = 20, scale = 2, nullable = false)
-    @NotNull(message = "Campo preço é obrigatório.")
-    @PositiveOrZero(message = "Campo preço tem valor positivo.")
+    @NotNull(message = "{campo.preco.obrigatorio}")
+    @PositiveOrZero(message = "{campo.preco.positivo}")
     private BigDecimal preco;
 
     public Produto() {

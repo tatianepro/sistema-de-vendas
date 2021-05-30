@@ -20,12 +20,12 @@ public class Pedido {
     @Column(name = "data_pedido")
     private LocalDate dataPedido;
     @Column(precision = 20, scale = 2)
-    @NotNull(message = "Campo total do pedido é obrigatório.")
+    @NotNull(message = "{campo.total-pedido.obrigatorio}")
     private BigDecimal total;
     @Enumerated(EnumType.STRING)
     private StatusPedido status;
     @OneToMany(mappedBy = "pedido")
-    @NotEmptyList(message = "Pedido não pode ser realizado sem itens.")
+    @NotEmptyList(message = "{campo.itens-pedido.obrigatorio}")
     private List<ItemPedido> itens;
 
     public Integer getId() {

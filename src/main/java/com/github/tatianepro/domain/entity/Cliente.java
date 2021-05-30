@@ -14,11 +14,11 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(length = 100, nullable = false)
-    @NotEmpty(message = "Campo nome do cliente é obrigatório.")
+    @NotEmpty(message = "{campo.nome-cliente.obrigatorio}")
     private String nome;
     @Column(length = 11, nullable = false)
-    @NotEmpty(message = "Campo CPF do cliente é obrigatório.")
-    @CPF(message = "Informe um CPF válido.")
+    @NotEmpty(message = "{campo.cpf.obrigatorio}")
+    @CPF(message = "{campo.cpf.invalido}")
     private String cpf;
     @JsonIgnore
     @OneToMany(mappedBy = "cliente")

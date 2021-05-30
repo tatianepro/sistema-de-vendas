@@ -8,10 +8,10 @@ import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 
 public class ProdutoDto {
-    @NotEmpty(message = "Campo descrição é obrigatório.")
+    @NotEmpty(message = "{campo.descricao.obrigatorio}")
     private String descricao;
-    @NotNull(message = "Campo preço é obrigatório.")
-    @PositiveOrZero(message = "Campo preço tem valor positivo.")
+    @NotNull(message = "{campo.preco.obrigatorio}")
+    @PositiveOrZero(message = "{campo.preco.positivo}")
     private BigDecimal preco;
 
     public String getDescricao() {
