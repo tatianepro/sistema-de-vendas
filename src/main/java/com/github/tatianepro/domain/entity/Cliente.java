@@ -1,7 +1,6 @@
 package com.github.tatianepro.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.github.tatianepro.rest.dto.ClienteDto;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
