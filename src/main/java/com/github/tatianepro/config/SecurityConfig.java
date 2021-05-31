@@ -3,6 +3,7 @@ package com.github.tatianepro.config;
 import com.github.tatianepro.rest.service.impl.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -33,13 +34,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                    .antMatchers(HttpMethod.POST, "/api/usuarios/**")
+//                        .hasAnyRole("USER", "ADMIN")
+                        .permitAll()
                     .antMatchers("/api/clientes/**")
                         .hasAnyRole("USER", "ADMIN")
                     .antMatchers("/api/pedidos/**")
                         .hasAnyRole("USER", "ADMIN")
                     .antMatchers("/api/produtos/**")
                         .hasRole("ADMIN")
+                    .anyRequest()
+                        .authenticated()
                 .and()
-                    .httpBasic();   // performs http requests passing the credentials by authorization header
+                    .httpBasic()   // performs http requests passing the credentials by authorization header
+                .and().headers().frameOptions().disable();
     }
 }
