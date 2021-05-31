@@ -2,6 +2,7 @@ package com.github.tatianepro.rest.service.impl;
 
 import com.github.tatianepro.domain.entity.Usuario;
 import com.github.tatianepro.domain.repository.UsuarioRepository;
+import com.github.tatianepro.exception.SenhaInvalidaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,6 +42,15 @@ public class UsuarioServiceImpl implements UserDetailsService {
                 .password(usuario.getSenha())
                 .roles(roles)
                 .build();
+    }
+
+    public UserDetails autenticar(Usuario usuario) throws SenhaInvalidaException {
+        UserDetails userDetails = loadUserByUsername(usuario.getLogin());
+        boolean matches = passwordEncoder.matches(usuario.getSenha(), userDetails.getPassword());
+        if (!matches) {
+            throw new SenhaInvalidaException();
+        }
+        return userDetails;
     }
 
 }

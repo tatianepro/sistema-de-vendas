@@ -17,6 +17,15 @@ public class Usuario {
     @Column
     private boolean admin;
 
+    public Usuario() {
+    }
+
+    public Usuario(String login,
+                   String senha) {
+        this.login = login;
+        this.senha = senha;
+    }
+
     public Integer getId() {
         return id;
     }
