@@ -1,7 +1,9 @@
-package com.github.tatianepro.rest.service;
+package com.github.tatianepro.security.jwt;
 
 import com.github.tatianepro.VendasApplication;
 import com.github.tatianepro.domain.entity.Usuario;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,14 +45,44 @@ public class JwtService {
                 .compact();
     }
 
-    // testando o token gerado
+    private Claims obterClaims(String token) throws ExpiredJwtException {
+        return Jwts
+                .parser()
+                .setSigningKey(chaveAssinatura)
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    public boolean tokenIsValido(String token) {
+        try {
+            Claims claims = obterClaims(token);
+            Date dataExpiracao_Date = claims.getExpiration();
+            LocalDateTime dataExpiracao_LocalDateTime = dataExpiracao_Date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+            return !LocalDateTime.now().isAfter(dataExpiracao_LocalDateTime);
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    public String obterLoginUsuario(String token) throws ExpiredJwtException {
+        return (String) obterClaims(token).getSubject();
+    }
+
+    // testing the generated token
     public static void main(String[] args) {
+        // test encrypting
         ConfigurableApplicationContext context = SpringApplication.run(VendasApplication.class);
         JwtService service = context.getBean(JwtService.class);
         Usuario usuario = new Usuario();
         usuario.setLogin("cicrano");
         String token = service.gerarToken(usuario);
         System.out.println(token);
+
+        // test decrypting
+        boolean tokenIsValido = service.tokenIsValido(token);
+        System.out.println("Token is valid? " + tokenIsValido);
+
+        System.out.println("subject: " + service.obterLoginUsuario(token));
     }
 
 }
