@@ -47,6 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                    .antMatchers("/h2-console/**")
+                        .permitAll()
                     .antMatchers(HttpMethod.POST, "/api/usuarios/**")
 //                        .hasAnyRole("USER", "ADMIN")
                         .permitAll()

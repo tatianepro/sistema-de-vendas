@@ -1,9 +1,12 @@
 package com.github.tatianepro.rest.service.impl;
 
+import com.github.tatianepro.VendasApplication;
 import com.github.tatianepro.domain.entity.Usuario;
 import com.github.tatianepro.domain.repository.UsuarioRepository;
 import com.github.tatianepro.exception.SenhaInvalidaException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -51,6 +54,13 @@ public class UsuarioServiceImpl implements UserDetailsService {
             throw new SenhaInvalidaException();
         }
         return userDetails;
+    }
+
+    public static void main(String[] args) {
+        ConfigurableApplicationContext context = SpringApplication.run(VendasApplication.class);
+        PasswordEncoder passwordEncoder = context.getBean(PasswordEncoder.class);
+        String passwordEncoded = passwordEncoder.encode("123");
+        System.out.println(passwordEncoded);
     }
 
 }
