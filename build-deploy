@@ -1,0 +1,29 @@
+Generating a STAND-ALONE Application => JAR
+    for development purposes
+
+        // build, test and pack to a JAR file
+        mvn clean package
+
+        // access target folder with the follow command to execute the sistema de vendas api
+        java -jar <nome-arquivo.jar>
+
+Generating  a WEB Application => WAR
+    for production purposes
+    to be deployed into a java container server / servlet container
+        // POM.xml define
+            <packaging>WAR</packaging>
+        //  POM.xml dependency to be provided
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-tomcat</artifactId>
+                <scope>provided</scope>
+            </dependency>
+        // Initialization class to extend
+            extend SpringBootServletInitializer
+        // build, test and pack to a WAR file
+                mvn clean package
+
+Build the API according the profiles setted at POM.xml
+    mvn clean package -P <profile.id>
+
+    ex: mvn clean package -P development
